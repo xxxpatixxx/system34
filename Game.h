@@ -53,6 +53,7 @@ public:
     void renderText(sf::RenderTarget & target);
     void renderEnemies(sf::RenderTarget & target);
     void renderBackground(sf::RenderTarget & target);
+    
     void render();
 
 
@@ -76,9 +77,12 @@ private:
     sf::Font font;
     sf::Texture background;
     sf::Texture cicel;
+    sf::Image curser;
+    
     
     //Sounds
     sf::Music music;
+    sf::Music buble;
 
     //Text
     sf::Text uiText;
@@ -108,6 +112,7 @@ private:
     void initSound();
     void initFonts();
     void initText();
+    void initCourser();
     void initEnemies();
 
 };

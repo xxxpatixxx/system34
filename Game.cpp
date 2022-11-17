@@ -23,8 +23,8 @@ void Game::initializeVariables()
 
 void Game::initWindow()
 {   
-    this->videoMode.height = 480 * 2;
-    this->videoMode.width = 640 * 2;
+    this->videoMode.height = 1040;
+    this->videoMode.width = 1900;
 
     this->window = new sf::RenderWindow(this->videoMode, "system34", sf::Style::Titlebar | sf::Style::Close);
 
@@ -53,7 +53,7 @@ void Game::initFonts ()
 }
 void Game::initTexture ()
 {
-    if(!this->background.loadFromFile("images/Back.png"))
+    if(!this->background.loadFromFile("images/Back2.png"))//case
     {
         std::cout << "Error: Faild to load Texture background" << std::endl;
     }
@@ -63,14 +63,25 @@ void Game::initTexture ()
         std::cout << "Error: Faild to load Texture : circel" << std::endl;
     }
 
+    
+    
+
 
 }
 void Game::initSound ()
 {
-    if (!this->music.openFromFile("sund/popcorm.wav"))
+    if (!this->music.openFromFile("sund/song2.wav"))//case
     {
         std::cout << "Error: Faild to load Sound : music" << std::endl;
     }
+
+    if (!this->buble.openFromFile("sund/bubl.wav"))//case
+    {
+        std::cout << "Error: Faild to load Sound : buble" << std::endl;
+    }
+
+
+
     music.play();
     music.setVolume (10);
     music.setLoop(true);
@@ -84,6 +95,20 @@ void Game::initText ()
     this->uiText.setString("NONE");
 }
 
+void Game::initCourser ()
+{
+    sf::Cursor cursor;
+    if (!cursor.loadFromSystem(sf::Cursor::Cross))
+    {
+        std::cout << "coursour" << std::endl;
+    }
+
+
+
+
+    
+}
+
 
 //constructur /destruct
 Game::Game()
@@ -95,12 +120,14 @@ Game::Game()
     this->initTexture();
     this->initSound();
     this->initText();
+    this->initCourser();
     
     this->initEnemies();
 }
 
 Game::~Game()
 {
+    this->window->close();
     delete this->window;
 }
 
@@ -290,7 +317,7 @@ void Game::updateEnemies()
             {
                  if(this->enemies[i].getGlobalBounds().contains(this->mosePosView))
                 {
-                    
+                    this->buble.play();
 
                     if(this->enemies[i].getFillColor()== sf::Color::Magenta)
                     {
@@ -318,8 +345,13 @@ void Game::updateEnemies()
                     deleted =true;
                     this->enemies.erase(this->enemies.begin() + i);
                 }
+                
 
             }
+        }
+        else
+        {
+            this->buble.stop();
         }
 
        
@@ -358,6 +390,8 @@ void Game::renderBackground(sf::RenderTarget & target)
     target.draw(this->backgroundrec);
 }
 
+
+
 void Game::render()//render
 {
     this->window->clear();
@@ -369,6 +403,9 @@ void Game::render()//render
     this->renderEnemies(*this->window);
 
     this->renderText(*this->window);
+
+
+
 
     this->window->display();
 }
