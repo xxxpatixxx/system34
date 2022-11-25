@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "header/Game.h"
 
 
 //private functions
@@ -26,7 +26,7 @@ void Game::initWindow()
     this->videoMode.height = 1040;
     this->videoMode.width = 1900;
 
-    this->window = new sf::RenderWindow(this->videoMode, "system34", sf::Style::Titlebar | sf::Style::Close);
+    this->window = new sf::RenderWindow(this->videoMode, "system34", sf::Style::Titlebar | sf::Style::Close );
 
     this->window->setFramerateLimit(60);
 
@@ -384,7 +384,7 @@ void Game::renderEnemies(sf::RenderTarget & target)
 void Game::renderBackground(sf::RenderTarget & target)
 {
     this->backgroundrec.setPosition(0,0);
-    this->backgroundrec.setSize(sf::Vector2f(videoMode.width,videoMode.height));
+    this->backgroundrec.setSize(sf::Vector2f(this->window->getSize().x,this->window->getSize().y));
     this->backgroundrec.setTexture(&this->background);
     this->backgroundrec.setFillColor(sf::Color( 55, 55, 55, 200 ));
     target.draw(this->backgroundrec);
@@ -410,25 +410,6 @@ void Game::render()//render
     this->window->display();
 }
 
-void Game::pyScore()
-{
-    try {
-        int Score;
-        Score = this->points;
 
-    
-    
-        std::string cmd = "Python3 scoresend.py " + std::to_string(Score);
-        int res = std::system(cmd.c_str());
-        std::cout << res << std::endl;
-      
-    }
-    catch (int num) {
-        throw ("install python");
-    }
-
-    
-    
-}
 
 
